@@ -1,4 +1,13 @@
 #!/bin/bash
+set -e
+
+if [ -z "$1" ]; then
+    echo "Usage:"
+    echo " $0 <UUID string>"
+    echo "Example:"
+    echo " $0 d24d5b92-72db-11e3-8a1a-7f0c339dfe8b"
+    exit 1
+fi
 
 # like d24d5b92-72db-11e3-8a1a-7f0c339dfe8b
 QR=$1
@@ -88,3 +97,4 @@ cat > $QR.svg <<EOF
 </svg>
 EOF
 inkscape $QR.svg  --export-pdf=$QR-label.pdf
+rm $QR.svg $QR.png
