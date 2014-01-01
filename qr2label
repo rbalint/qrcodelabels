@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# like d24d5b92-72db-11e3-8a1a-7f0c339dfe8b
+QR=$1
+IFS='-'
+read -ra QRSPLIT <<< "$1"
+IFS=';'
+
+qrencode ${QR} -o - -l M -m 2 | convert -resize 1000%x1000% -filter Point - - > ${QR}.png
+cat > $QR.svg <<EOF
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="label.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="88.620259"
+     inkscape:cy="410.37425"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1278"
+     inkscape:window-height="1003"
+     inkscape:window-x="1440"
+     inkscape:window-y="19"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       y="14.005021"
+       x="36.547241"
+       id="image3071"
+       xlink:href="$QR.png"
+       height="671"
+       width="671" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3074"
+       style="font-size:82px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
+       transform="translate(7.1756592,68.690373)"><flowRegion
+         id="flowRegion3076"><rect
+           id="rect3078"
+           width="746.93268"
+           height="415.13269"
+           x="-10.220471"
+           y="620.34912"
+           style="font-size:82px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold;fill:#000000;fill-opacity:1" /></flowRegion><flowPara
+         id="flowPara3080">${QRSPLIT[0]}</flowPara><flowPara
+         id="flowPara3082">${QRSPLIT[1]}-${QRSPLIT[2]}-${QRSPLIT[3]}</flowPara><flowPara
+         id="flowPara3084">${QRSPLIT[4]}</flowPara></flowRoot>  </g>
+</svg>
+EOF
+inkscape $QR.svg  --export-pdf=$QR-label.pdf
