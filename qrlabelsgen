@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+# TODO use temp dir
+echo "Generating 3x3 UUID labels on a single page"
+LABEL_PDFS=""
+for i in $(seq 3); do
+    UUID=$(uuid -m)
+    ./uuid2qrlabel $UUID
+    LABEL_PDFS="$LABEL_PDFS $UUID-label.pdf $UUID-label.pdf $UUID-label.pdf"
+done
+
+pdfnup --no-landscape --nup 3x3 $LABEL_PDFS
+rm -rf $LABEL_PDFS
