@@ -8,8 +8,10 @@ LABEL_PDFS=""
 for i in $(seq 3); do
     UUID=$(uuid -m)
     ./uuid2qrlabel $UUID
+    mkdir $UUID
     LABEL_PDFS="$LABEL_PDFS $UUID-label.pdf $UUID-label.pdf $UUID-label.pdf"
 done
 
 pdfnup --no-landscape --nup 3x3 $LABEL_PDFS
 rm -rf $LABEL_PDFS
+
