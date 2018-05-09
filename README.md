@@ -22,7 +22,7 @@ Installation
 
 The scripts can be run from the top directory, no installation mechanism is provided.
 To install the dependencies run:
-`apt-get install texlive-extra-utils qrencode imagemagick inkscape`
+`apt-get install texlive-extra-utils qrencode imagemagick inkscape uuid`
 
 
 Usage
